@@ -1,5 +1,17 @@
-const getParkings = (req, res) => {
-  res.send(mockParkings);
+import getParkingsForLocation from "./parkingRepository";
+
+const getParkings = async (req, res) => {
+  // get parameters
+  const latitude = req.query.latitude;
+  const longitude = req.query.longitude;
+  console.log("location", { latitude, longitude });
+
+  // get parkings for location
+  const parkings = await getParkingsForLocation(latitude, longitude);
+
+  // send parkings
+  // res.send(mockParkings);
+  res.send(parkings);
 };
 
 export default getParkings;
