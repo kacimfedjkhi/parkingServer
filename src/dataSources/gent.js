@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import axios from "axios";
 
 export const fetchParkingsFromGhent = async () => {
   const rawData = await fetchRawData();
@@ -7,9 +7,8 @@ export const fetchParkingsFromGhent = async () => {
 };
 
 const fetchRawData = async () => {
-  const response = await fetch(
+  const response = await axios(
     "https://datatank.stad.gent/4/mobiliteit/bezettingparkingsrealtime.json"
   );
-  const json = await response.json();
-  return json;
+  return response.data;
 };
