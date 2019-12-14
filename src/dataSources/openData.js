@@ -82,8 +82,6 @@ const fetchParkings = async url => {
   return parkings;
 };
 
-// This is the first Linked Data helper function:
-// It takes the list of triples as an argument, and returns a summary of everything we know about a certain subject in one object
 const triplesToObjects = function(triples) {
   console.log("in triples func!!");
 
