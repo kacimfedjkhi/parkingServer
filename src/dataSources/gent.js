@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const fetchParkingsFromGhent = async () => {
   const rawData = await fetchRawData();
-  console.log("raw data", rawData);
+  //console.log("raw data", rawData);
   return rawData.map(parseParking);
 };
 
