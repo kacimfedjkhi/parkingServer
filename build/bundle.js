@@ -15468,7 +15468,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.fetchParki
 var fetchParkingsFromGhent = exports.fetchParkingsFromGhent = function () {var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {var rawData;return regeneratorRuntime.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
               fetchRawData());case 2:rawData = _context.sent;
             console.log("raw data", rawData);return _context.abrupt("return",
-            rawData);case 5:case "end":return _context.stop();}}}, _callee, undefined);}));return function fetchParkingsFromGhent() {return _ref.apply(this, arguments);};}();
+            rawData.map(parseParking));case 5:case "end":return _context.stop();}}}, _callee, undefined);}));return function fetchParkingsFromGhent() {return _ref.apply(this, arguments);};}();
 
 
 var fetchRawData = function () {var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {var response;return regeneratorRuntime.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return (
@@ -15476,6 +15476,64 @@ var fetchRawData = function () {var _ref2 = _asyncToGenerator( /*#__PURE__*/rege
               "https://datatank.stad.gent/4/mobiliteit/bezettingparkingsrealtime.json"));case 2:response = _context2.sent;return _context2.abrupt("return",
 
             response.data);case 4:case "end":return _context2.stop();}}}, _callee2, undefined);}));return function fetchRawData() {return _ref2.apply(this, arguments);};}();
+
+
+var parseParking = function parseParking(raw) {
+  return {
+    name: raw.description,
+    latitude: raw.latitude,
+    longitude: raw.longitude,
+    availableSpaces: raw.parkingStatus.availableCapacity,
+    totalSpaces: raw.parkingStatus.totalCapacity };
+
+};
+/*
+   {
+     "id": 18408,
+     "lastModifiedDate": "2016-04-12T12:58:15.673Z",
+     "name": "P07 Sint-Michiels",
+     "description": "Sint-Michiels",
+     "latitude": 51.05367,
+     "longitude": 3.7186,
+     "address": "Sint-Michielsplein 8\n9000 Gent",
+     "contactInfo": "Tel.: 09 266 29 20",
+     "city": {
+         "id": 1004,
+         "name": "Gent"
+     },
+     "parkingServer": {
+         "id": 1005,
+         "name": "ITG Gent"
+     },
+     "suggestedFreeThreshold": 4,
+     "suggestedFullThreshold": 4,
+     "capacityRounding": 1,
+     "totalCapacity": 450,
+     "openingTimes": [
+         {
+             "days": [
+                 "MONDAY",
+                 "TUESDAY",
+                 "WEDNESDAY",
+                 "THURSDAY",
+                 "FRIDAY",
+                 "SATURDAY",
+                 "SUNDAY"
+             ],
+             "from": "00:00",
+             "to": "23:59"
+         }
+     ],
+     "parkingStatus": {
+         "availableCapacity": 99,
+         "totalCapacity": 465,
+         "open": true,
+         "suggestedCapacity": "ACTUAL",
+         "activeRoute": "",
+         "lastModifiedDate": "13/12/2019 16:29:00"
+     }
+   }
+   */
 
 /***/ }),
 /* 112 */
@@ -17231,22 +17289,10 @@ module.exports = function spread(callback) {
 
 /***/ }),
 /* 137 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });var fetchParkingsFromKortrijk = exports.fetchParkingsFromKortrijk = function fetchParkingsFromKortrijk() {return (
-    fetchParkings("https://data.sflsjdflsdkfj/kortrijk"));};
-var fetchParkingsFromLeuven = exports.fetchParkingsFromLeuven = function fetchParkingsFromLeuven() {return (
-    fetchParkings("https://data.sflsjdflsdkfj/leuven"));};
-var fetchParkingsFromSintNiklaas = exports.fetchParkingsFromSintNiklaas = function fetchParkingsFromSintNiklaas() {return (
-    fetchParkings("https://data.sflsjdflsdkfj/sint-niklaas"));};
-
-var fetchParkings = function fetchParkings(url) {
-  // triples ophalen
-
-  // omzetten naar array van parkings (volgens ons model)
-  return [];
-};
+throw new Error("Module build failed: SyntaxError: Unexpected token (16:4)\n\n\u001b[0m \u001b[90m 14 | \u001b[39m  }\u001b[33m;\u001b[39m\n \u001b[90m 15 | \u001b[39m  \u001b[36mconst\u001b[39m test \u001b[33m=\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 16 | \u001b[39m    \u001b[33m...\u001b[39mtestobject\n \u001b[90m    | \u001b[39m    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 17 | \u001b[39m  }\u001b[33m;\u001b[39m\n \u001b[90m 18 | \u001b[39m  console\u001b[33m.\u001b[39mlog(\u001b[33m...\u001b[39mtestobject)\u001b[33m;\u001b[39m\n \u001b[90m 19 | \u001b[39m  \u001b[36mconst\u001b[39m fetch \u001b[33m=\u001b[39m \u001b[36mnew\u001b[39m ldfetch({})\u001b[33m;\u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 138 */
