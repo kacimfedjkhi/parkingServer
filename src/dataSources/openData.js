@@ -8,9 +8,8 @@ export const fetchParkingsFromLeuven = () =>
 export const fetchParkingsFromSintNiklaas = () =>
   fetchParkings("https://sint-niklaas.datapiloten.be/parking");
 
-const parkings = [];
-
 const fetchParkings = async url => {
+  const parkings = [];
   let fetch = new ldfetch({}); //options: allow to add more headers if needed
   let response = await fetch.get(url);
   let responsetriples = response.triples;
@@ -80,7 +79,6 @@ const fetchParkings = async url => {
       }
     }
   }
-
   return parkings;
 };
 
