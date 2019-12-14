@@ -8,7 +8,7 @@ const port = process.env.PORT || 8080;
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-app.get("/", (req, res) => res.send(`Hello world`));
+app.get("/", (req, res) => res.send(`Linked parking data`));
 
 app.get("/parkings", getParkings);
 
