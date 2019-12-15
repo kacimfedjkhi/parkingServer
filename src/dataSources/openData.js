@@ -25,11 +25,13 @@ const fetchParkings = async url => {
     );
     //put all triples in one pile
     responsetriples = response.triples.concat(response2.triples);
+    console.log("test", responsetriples);
     //and we need to run this again
     objects = triplesToObjects(responsetriples);
   }
 
   const graphs = quadsToObjects(responsetriples);
+
   //now, create an overview of the timeseries per parking site
   for (const graphname in graphs) {
     for (const subject in graphs[graphname]) {
