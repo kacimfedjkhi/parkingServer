@@ -69,8 +69,8 @@ const fetchParkings = async url => {
     ) {
       const parking = {
         name: entity["http://www.w3.org/2000/01/rdf-schema#label"],
-        latitude: O,
-        longitude: O,
+        latitude: null,
+        longitude: null,
         availableSpaces:
           entity["http://vocab.datex.org/terms#parkingNumberOfVacantSpaces"],
         totalSpaces:
