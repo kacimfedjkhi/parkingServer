@@ -91,7 +91,8 @@ const fetchParkings = async (url, place) => {
       }
     }
   }
-  return await parkings;
+
+  return parkings;
 };
 
 const triplesToObjects = function(triples) {
@@ -133,6 +134,8 @@ const quadsToObjects = function(quads) {
   return graphs;
 };
 
+//geocoder init + options
+
 const geoCodeOptions = {
   provider: "google",
 
@@ -143,9 +146,3 @@ const geoCodeOptions = {
 };
 
 const geocoder = NodeGeocoder(geoCodeOptions);
-
-const geoLat = (parking, place) => {
-  geocoder.geocode(parking + " " + place, function(err, res) {
-    console.log(res);
-  });
-};
