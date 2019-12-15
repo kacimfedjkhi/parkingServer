@@ -8,6 +8,8 @@ export const fetchParkingsFromLeuven = () =>
 export const fetchParkingsFromSintNiklaas = () =>
   fetchParkings("https://sint-niklaas.datapiloten.be/parking", "sint-niklaas");
 
+const locationCache = [];
+
 const fetchParkings = async (url, place) => {
   const parkings = [];
   let fetch = new ldfetch({});
@@ -68,18 +70,30 @@ const fetchParkings = async (url, place) => {
       entity["http://www.w3.org/1999/02/22-rdf-syntax-ns#type"] ===
       "http://vocab.datex.org/terms#UrbanParkingSite"
     ) {
-      geocoder.geocode(
-        entity["http://www.w3.org/2000/01/rdf-schema#label"] + " " + place,
-        function(err, res) {
-          console.log(res[0].latitude);
-          console.log(res[0].longitude);
-        }
-      );
+      const entityReference =
+        entity["http://www.w3.org/2000/01/rdf-schema#label"] + " " + place;
+
+      let location = locationCache[entityReference];
+
+      if (!location) {
+        const locationPromise = new Promise(resolve =>
+          geocoder.geocode(
+            entity["http://www.w3.org/2000/01/rdf-schema#label"] + " " + place,
+            (error, result) => resolve(result[0])
+          )
+        );
+
+        location = await locationPromise;
+        locationCache[entityReference] = location;
+      }
+
+      const latitude = location.latitude;
+      const longitude = location.longitude;
 
       const parking = {
         name: entity["http://www.w3.org/2000/01/rdf-schema#label"],
-        latitude: null,
-        longitude: null,
+        latitude: latitude,
+        longitude: longitude,
         availableSpaces:
           entity["http://vocab.datex.org/terms#parkingNumberOfVacantSpaces"],
         totalSpaces:
