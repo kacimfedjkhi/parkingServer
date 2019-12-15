@@ -1,13 +1,14 @@
 import ldfetch from "ldfetch";
+import NodeGeocoder from "node-geocoder";
 
 export const fetchParkingsFromKortrijk = () =>
-  fetchParkings("https://kortrijk.datapiloten.be/parking");
+  fetchParkings("https://kortrijk.datapiloten.be/parking", "kortrijk");
 export const fetchParkingsFromLeuven = () =>
-  fetchParkings("https://leuven.datapiloten.be/parking");
+  fetchParkings("https://leuven.datapiloten.be/parking", "leuven");
 export const fetchParkingsFromSintNiklaas = () =>
-  fetchParkings("https://sint-niklaas.datapiloten.be/parking");
+  fetchParkings("https://sint-niklaas.datapiloten.be/parking", "sint-niklaas");
 
-const fetchParkings = async url => {
+const fetchParkings = async (url, place) => {
   const parkings = [];
   let fetch = new ldfetch({});
   let response = await fetch.get(url);
@@ -67,6 +68,14 @@ const fetchParkings = async url => {
       entity["http://www.w3.org/1999/02/22-rdf-syntax-ns#type"] ===
       "http://vocab.datex.org/terms#UrbanParkingSite"
     ) {
+      geocoder.geocode(
+        entity["http://www.w3.org/2000/01/rdf-schema#label"] + " " + place,
+        function(err, res) {
+          console.log(res[0].latitude);
+          console.log(res[0].longitude);
+        }
+      );
+
       const parking = {
         name: entity["http://www.w3.org/2000/01/rdf-schema#label"],
         latitude: null,
@@ -82,7 +91,7 @@ const fetchParkings = async url => {
       }
     }
   }
-  return parkings;
+  return await parkings;
 };
 
 const triplesToObjects = function(triples) {
@@ -122,4 +131,21 @@ const quadsToObjects = function(quads) {
     graphs[quad.graph.value] = objects;
   }
   return graphs;
+};
+
+const geoCodeOptions = {
+  provider: "google",
+
+  // Optional depending on the providers
+  httpAdapter: "https", // Default
+  apiKey: "AIzaSyASWkcB_89FK3_Hs9h1R4fyJGdj4aR0MIc", // for Mapquest, OpenCage, Google Premier
+  formatter: null // 'gpx', 'string', ...
+};
+
+const geocoder = NodeGeocoder(geoCodeOptions);
+
+const geoLat = (parking, place) => {
+  geocoder.geocode(parking + " " + place, function(err, res) {
+    console.log(res);
+  });
 };
