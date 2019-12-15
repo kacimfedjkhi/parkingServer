@@ -1,5 +1,4 @@
 import ldfetch from "ldfetch";
-//import jsonld from "jsonld";
 
 export const fetchParkingsFromKortrijk = () =>
   fetchParkings("https://kortrijk.datapiloten.be/parking");
@@ -10,9 +9,11 @@ export const fetchParkingsFromSintNiklaas = () =>
 
 const fetchParkings = async url => {
   const parkings = [];
-  let fetch = new ldfetch({}); //options: allow to add more headers if needed
+  let fetch = new ldfetch({});
   let response = await fetch.get(url);
+
   let responsetriples = response.triples;
+
   let objects = triplesToObjects(responsetriples);
   const timeseries = [];
 
@@ -25,7 +26,7 @@ const fetchParkings = async url => {
     );
     //put all triples in one pile
     responsetriples = response.triples.concat(response2.triples);
-    console.log("test", responsetriples);
+
     //and we need to run this again
     objects = triplesToObjects(responsetriples);
   }
@@ -68,8 +69,8 @@ const fetchParkings = async url => {
     ) {
       const parking = {
         name: entity["http://www.w3.org/2000/01/rdf-schema#label"],
-        latitude: "empty",
-        longitude: "empty",
+        latitude: O,
+        longitude: O,
         availableSpaces:
           entity["http://vocab.datex.org/terms#parkingNumberOfVacantSpaces"],
         totalSpaces:
